@@ -50,12 +50,7 @@ Post: Processes a Plane wanting to use Runway, when
 }
 
 
-void Plane::land(int time) const
-/*
-Post: Processes a Plane that is landing at the specified time.
-*/
-
-{
+void Plane::land(int time) const {
    int wait = time - clock_start;
    cout << time << ": Plane number " << flt_num << " landed after "
         << wait << " time unit" << ((wait == 1) ? "" : "s")
@@ -63,12 +58,7 @@ Post: Processes a Plane that is landing at the specified time.
 }
 
 
-void Plane::fly(int time) const
-/*
-Post: Process a Plane that is taking off at the specified time.
-*/
-
-{
+void Plane::fly(int time) const {
    int wait = time - clock_start;
    cout << time << ": Plane number " << flt_num << " took off after "
         << wait << " time unit" << ((wait == 1) ? "" : "s")
@@ -76,11 +66,7 @@ Post: Process a Plane that is taking off at the specified time.
 }
 
 
-int Plane::started() const
-/*
-Post: Return the time that the Plane entered the airport system.
-*/
-{
+int Plane::started() const {
    return clock_start;
 }
 

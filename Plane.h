@@ -1,4 +1,5 @@
 #pragma once
+
 enum Plane_status {null, arriving, departing};
 
 class Plane {

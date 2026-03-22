@@ -6,5 +6,5 @@
 using namespace std;
 
 enum Error_code {
-	result, fail, success
+	result, fail, success, overflow, underflow, 
 };
