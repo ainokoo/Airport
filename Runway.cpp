@@ -57,8 +57,8 @@ Uses:  class Extended_queue.
 
 {
    Error_code result;
-   if (takeoff.size() < queue_limit)
-      result = takeoff.append(current);
+   if (takeoff_queue.size() < queue_limit)
+      result = takeoff_queue.append(current);
    else
       result = fail;
    num_takeoff_requests++;
@@ -93,12 +93,12 @@ Uses:  class Extended_queue.
       landing.serve();
    }
 
-   else if (!takeoff.empty()) {
-      takeoff.retrieve(moving);
+   else if (!takeoff_queue.empty()) {
+      takeoff_queue.retrieve(moving);
       takeoff_wait += time - moving.started();
       num_takeoffs++;
       in_progress = takeoff;
-      takeoff.serve();
+      takeoff_queue.serve();
    }
 
    else {
@@ -132,7 +132,7 @@ void Runway::shut_down(int time) const {
         << "Total number of planes left in landing queue "
         << landing.size() << endl
         << "Total number of planes left in takeoff queue "
-        << takeoff.size() << endl;
+        << takeoff_queue.size() << endl;
    cout << "Percentage of time runway idle "
         << 100.0 * (( float ) idle_time) / (( float ) time) << "%" << endl;
    cout << "Average wait in landing queue "

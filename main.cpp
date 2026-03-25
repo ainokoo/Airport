@@ -3,6 +3,7 @@
 #include "Runway.h"
 #include "utility.h"
 #include "Extended_queue.h"
+#include "Random.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ void initialize(int &end_time, int &queue_limit,
 }
 
 
-int main_1()     {
+int main()     {
 
    int end_time;            //  time to run simulation
    int queue_limit;         //  size of Runway queues
@@ -73,4 +74,6 @@ int main_1()     {
       }
    }
    small_airport.shut_down(end_time);
+   
+   return 0;
 }

@@ -12,7 +12,7 @@ public:
 
 private:
    Extended_queue landing;
-   Extended_queue takeoff;
+   Extended_queue takeoff_queue;
    int queue_limit;
    int num_land_requests;        //  number of planes asking to land
    int num_takeoff_requests;     //  number of planes asking to take off

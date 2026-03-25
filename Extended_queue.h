@@ -4,7 +4,7 @@
 
 typedef Plane Queue_entry;
 
-const int maxqueue = 6; 
+const int maxqueue = 40; 
 
 class Queue {
 public:
@@ -27,6 +27,4 @@ public:
 	int size() const;
 	void clear();
 	Error_code serve_and_retrieve(Queue_entry &item);
-
-	void print();
 };
