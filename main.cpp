@@ -9,7 +9,6 @@ using namespace std;
 
 void main_1();
 void main_2();
-void main_3();
 
 void initialize(int &end_time, int &queue_limit,
                 double &arrival_rate, double &departure_rate) {
@@ -55,11 +54,10 @@ int main() {
       switch (choice) {
          case 1: main_1(); break;
          case 2: main_2(); break;
-         case 3: main_3(); break;
-         case 4: cout << "Ending simulation" << endl; break;
+         case 3: cout << "Ending simulation" << endl; break;
          default: cout << "Invalid choice" << endl;
       }
-   } while (choice != 4);
+   } while (choice != 3);
 
    return 0;
 }
@@ -127,65 +125,7 @@ void main_2() {
       int number_arrivals = variable.poisson(arrival_rate);
       for (int i = 0; i < number_arrivals; i++) {
          Plane current_plane(flight_number++, current_time, arriving);
-         if (landing_airplanes.can_land(current_plane) != success)
-         current_plane.refuse();
-      }
-
-      int number_departures = variable.poisson(departure_rate);
-      for (int j = 0; j < number_departures; j++) {
-         Plane current_plane(flight_number++, current_time, departing);
-         if (departing_airplanes.can_depart(current_plane) != success)
-         current_plane.refuse();
-      }
-
-      Plane moving_plane;
-
-      if (landing_airplanes.activity(current_time, moving_plane) == land) {
-         moving_plane.land(current_time);
-      } else {
-         run_idle(current_time);
-      }
-
-      if (departing_airplanes.activity(current_time, moving_plane) == takeoff) {
-         moving_plane.fly(current_time);
-      } else {
-         run_idle(current_time);
-      }
-
-   }
-      landing_airplanes.shut_down(end_time);
-      departing_airplanes.shut_down(end_time);
-
-}
-
-void main_3() {
-
-   int end_time;
-   int queue_limit;
-   int flight_number = 0;
-
-
-
-   double arrival_rate, departure_rate;
-
-   initialize(end_time, queue_limit, arrival_rate, departure_rate);
-
-   Random variable;
-
-   Runway landing_airplanes(queue_limit);
-   Runway departing_airplanes(queue_limit);
-
-   int landing_queue = 0;
-   int departing_queue = 0;
-
-
-   for (int current_time = 0; current_time < end_time; current_time++) {
-      int number_arrivals = variable.poisson(arrival_rate);
-      for (int i = 0; i < number_arrivals; i++) {
-         Plane current_plane(flight_number++, current_time, arriving);
          if (landing_airplanes.can_land(current_plane) != success) {
-            landing_queue++;
-         } else {
          current_plane.refuse();
          }
       }
@@ -194,23 +134,26 @@ void main_3() {
       for (int j = 0; j < number_departures; j++) {
          Plane current_plane(flight_number++, current_time, departing);
          if (departing_airplanes.can_depart(current_plane) != success) {
-            departing_queue++;
-         } else {
-         current_plane.refuse();
+         current_plane.refuse(); 
          }
       }
-
-
-   bool landing_full = (landing_queue == queue_limit);
-   bool landing_empty = (landing_queue == 0);
-   bool departing_empty = (departing_queue == 0);
 
       Plane moving_plane;
       bool busy = false;
 
+      if (landing_airplanes.activity(current_time, moving_plane) == land) {
+         moving_plane.land(current_time);
+         busy = true;
+      }
 
-   if (!busy) {
-      run_idle(current_time);
+      if (departing_airplanes.activity(current_time, moving_plane) == takeoff) {
+         moving_plane.fly(current_time);
+         busy = true;
+
+      } if (!busy) {
+         run_idle(current_time);
+      }
    }
-}
+      landing_airplanes.shut_down(end_time);
+      departing_airplanes.shut_down(end_time);
 }
